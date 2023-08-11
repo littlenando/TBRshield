@@ -6,16 +6,17 @@ from pybricks.tools import wait, StopWatch
 
 #Declaração dos objetos
 hub = PrimeHub()
-esquerdo = Motor(Port.A)
-direito = Motor(Port.B, Direction.COUNTERCLOCKWISE)
-garraA = Motor(Port.C, Direction.COUNTERCLOCKWISE)
-garraB = Motor(Port.D)
+direito = Motor(Port.D, Direction.COUNTERCLOCKWISE)
+esquerdo = Motor(Port.B)
+garra = Motor(Port.A)
 
 robo = DriveBase(esquerdo, direito, 87, 126)
-garra = DriveBase(garraA,garraB,19,100)
+robo.settings(200, 1000, 180, 900)
 
 corD = ColorSensor(Port.E)
 corE = ColorSensor(Port.F)
+
+garra.run_time(250,1500)
 
 
 hub.system.set_stop_button((Button.BLUETOOTH))
@@ -70,18 +71,28 @@ def Estaciona(cor):
         esquerdo.brake()
 
 #Chegada até o ponto central da rampa (comum a todos)
-Andar(36.7)
+Andar(40.4)
 DirCurva(90)
-Andar(61.4)
+Andar(30)
+robo.settings(280, 1000, 180, 900)
+Andar(33.5)
+robo.settings(180, 1000, 180, 900)
+Andar(8)
 cor2 = SelecionaCor(corD.color())
-EsqCurva(90)
-cor1 = SelecionaCor(corD.color())
-DirCurva(180)
+Andar(-4)
+DirCurva(90)
+Andar(3.15)
 cor3 = SelecionaCor(corD.color())
+print(cor2)
+
+if cor3 != 'Y' and cor2 != 'Y':
+    cor1 = SelecionaCor(Color.YELLOW)
+elif cor3 != 'G' and cor2 != 'G':
+    cor1 = SelecionaCor(Color.GREEN)
+else:
+    cor1 = SelecionaCor(Color.RED)
 sequencia = f'{cor1}{cor2}{cor3}'
-DirCurva(90)
-Andar(62.1)
-DirCurva(90)
+print(sequencia)
 
 if sequencia == 'YRG':
     Andar(26.1)
