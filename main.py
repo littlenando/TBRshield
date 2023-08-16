@@ -4,22 +4,21 @@ from pybricks.parameters import Button, Color, Direction, Port, Side, Stop
 from pybricks.robotics import DriveBase
 from pybricks.tools import wait, StopWatch
 
-#Declaração dos objetos
-hub = PrimeHub()
-direito = Motor(Port.D, Direction.COUNTERCLOCKWISE)
-esquerdo = Motor(Port.B)
-garra = Motor(Port.A)
-
-robo = DriveBase(esquerdo, direito, 87, 126)
-robo.settings(200, 1000, 180, 900)
-
+direito = Motor(Port.B)
+garra = Motor(Port.C)
+esquerdo = Motor(Port.D, Direction.COUNTERCLOCKWISE)
 corD = ColorSensor(Port.E)
 corE = ColorSensor(Port.F)
 
-garra.run_time(250,1500)
 
+
+robo = DriveBase(direito, esquerdo, 87.2, 127.4)
+
+hub = PrimeHub()
 
 hub.system.set_stop_button((Button.BLUETOOTH))
+hub.imu.reset_heading(0)
+#garra.run_time(800,5000)
 
 #Ínicio do código
 
@@ -31,20 +30,20 @@ def SelecionaCor(cor):
     if cor == Color.YELLOW:
         return('Y')
 
-def EsqCurva(ang):
+def DirCurva(ang):
     if hub.imu.ready() == True:
-        print('oi')
-        while hub.imu.heading() > -(ang):
+        
+        while hub.imu.heading() < (ang):
             esquerdo.run(100)
             direito.run(-100)
         esquerdo.brake()
         direito.brake()
         hub.imu.reset_heading(0)
 
-def DirCurva(ang):
+def EsqCurva(ang):
     if hub.imu.ready() == True:
         print('oi')
-        while hub.imu.heading() < (ang):
+        while hub.imu.heading() > -(ang):
             esquerdo.run(-100)
             direito.run(100)
         esquerdo.brake()
@@ -54,36 +53,39 @@ def DirCurva(ang):
 def Andar(cm):
     robo.straight(cm*10)
 
-def Estaciona(cor):
-    while corD.color() != cor and corE.color() != cor:
+def Estaciona():
+    while corD.reflection() > 11 and corE.reflection() > 11:
         robo.drive(50,0)
-        print (corD.color())
+        print(corD.reflection())
     robo.stop()
-    if corD.color() == cor:
-        while corE.color() != cor:
+    if corD.reflection() < 11:
+        while corE.reflection() > 11:
             direito.run(90)
         wait(150)
         direito.brake()
-    elif corE.color() == cor:
-        while corD.color() != cor:
+    elif corE.reflection() < 11:
+        while corD.reflection() > 11:
             esquerdo.run(90)
         wait(150)
         esquerdo.brake()
 
 #Chegada até o ponto central da rampa (comum a todos)
-Andar(40.4)
+
+Andar(40)
 DirCurva(90)
-Andar(30)
-robo.settings(280, 1000, 180, 900)
-Andar(33.5)
-robo.settings(180, 1000, 180, 900)
-Andar(8)
+Andar(63.5)
+Andar(11.5)
+
+cores = [Color.GREEN, Color.RED, Color.YELLOW]
+
+while corD.color() not in cores and corE.color() not in cores:
+    robo.drive(95,0)
+robo.stop()
 cor2 = SelecionaCor(corD.color())
-Andar(-4)
 DirCurva(90)
-Andar(3.15)
+while corD.color() not in cores and corE.color() not in cores:
+    robo.drive(95,0)
 cor3 = SelecionaCor(corD.color())
-print(cor2)
 
 if cor3 != 'Y' and cor2 != 'Y':
     cor1 = SelecionaCor(Color.YELLOW)
@@ -93,31 +95,3 @@ else:
     cor1 = SelecionaCor(Color.RED)
 sequencia = f'{cor1}{cor2}{cor3}'
 print(sequencia)
-
-if sequencia == 'YRG':
-    Andar(26.1)
-    EsqCurva(90)
-    Andar(15.2)
-    hub.speaker.beep() #Aqui ele deverá atuar com a garra.
-    Andar(-15.2)
-    EsqCurva(90)
-    Andar(31.9)
-    EsqCurva(90)
-    Andar(63)
-    EsqCurva(90)
-    Andar(34.3)
-    EsqCurva(90)
-    Andar(17.1)
-
-
-
-elif sequencia == 'YGR':
-    pass
-elif sequencia == 'RYG':
-    pass
-elif sequencia == 'RGY':
-    pass
-elif sequencia == 'GRY':
-    pass
-elif sequencia == 'GYR':
-    pass
