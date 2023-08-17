@@ -10,15 +10,11 @@ esquerdo = Motor(Port.D, Direction.COUNTERCLOCKWISE)
 corD = ColorSensor(Port.E)
 corE = ColorSensor(Port.F)
 
-
-
 robo = DriveBase(direito, esquerdo, 87.2, 127.4)
 
 hub = PrimeHub()
 
-hub.system.set_stop_button((Button.BLUETOOTH))
 hub.imu.reset_heading(0)
-#garra.run_time(800,5000)
 
 #Ínicio do código
 
@@ -54,25 +50,25 @@ def Andar(cm):
     robo.straight(cm*10)
 
 def Estaciona():
-    while corD.reflection() > 11 and corE.reflection() > 11:
+    while corD.reflection() > 6 and corE.reflection() > 6:
         robo.drive(50,0)
-        print(corD.reflection())
     robo.stop()
-    if corD.reflection() < 11:
-        while corE.reflection() > 11:
+    if corD.reflection() < 6:
+        while corE.reflection() > 6:
             direito.run(90)
         wait(150)
         direito.brake()
-    elif corE.reflection() < 11:
-        while corD.reflection() > 11:
+    elif corE.reflection() < 6:
+        while corD.reflection() > 6:
             esquerdo.run(90)
         wait(150)
         esquerdo.brake()
 
 #Chegada até o ponto central da rampa (comum a todos)
 
-Andar(40)
+Andar(37.5)
 DirCurva(90)
+garra.run_time(700000,17000)
 Andar(63.5)
 Andar(11.5)
 
@@ -82,6 +78,7 @@ while corD.color() not in cores and corE.color() not in cores:
     robo.drive(95,0)
 robo.stop()
 cor2 = SelecionaCor(corD.color())
+Andar(-5)
 DirCurva(90)
 while corD.color() not in cores and corE.color() not in cores:
     robo.drive(95,0)
@@ -95,3 +92,18 @@ else:
     cor1 = SelecionaCor(Color.RED)
 sequencia = f'{cor1}{cor2}{cor3}'
 print(sequencia)
+DirCurva(90)
+Andar(45)
+Estaciona()
+DirCurva(90)
+Andar(11)
+
+garra.run_time(-700000,17000)
+
+if sequencia == 'RGY':
+    while corD.color() != Color.RED:
+        robo.drive(110, 0)
+    robo.stop()
+    garra.run_time(900000,16000)
+    Andar(-60)
+    DirCurva(90)
