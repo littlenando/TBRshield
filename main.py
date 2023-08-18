@@ -16,6 +16,8 @@ hub = PrimeHub()
 
 hub.imu.reset_heading(0)
 
+Motor(Port.A).run_time(300,100000)
+
 #Ínicio do código
 
 def SelecionaCor(cor):
@@ -66,11 +68,11 @@ def Estaciona():
 
 #Chegada até o ponto central da rampa (comum a todos)
 
+DirCurva(90)
 Andar(37.5)
 DirCurva(90)
-garra.run_time(700000,17000)
 Andar(63.5)
-Andar(11.5)
+Andar(8.5)
 
 cores = [Color.GREEN, Color.RED, Color.YELLOW]
 
@@ -98,8 +100,6 @@ Estaciona()
 DirCurva(90)
 Andar(11)
 
-garra.run_time(-700000,17000)
-
 if sequencia == 'RGY':
     while corD.color() != Color.RED:
         robo.drive(110, 0)
@@ -107,3 +107,13 @@ if sequencia == 'RGY':
     garra.run_time(900000,16000)
     Andar(-60)
     DirCurva(90)
+elif sequencia == 'RYG':
+    pass
+elif sequencia == 'YGR':
+    pass
+elif sequencia == 'YRG':
+    pass
+elif sequencia == 'GRY':
+    pass
+elif sequencia == 'GYR':
+    pass
