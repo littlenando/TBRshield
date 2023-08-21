@@ -5,18 +5,17 @@ from pybricks.robotics import DriveBase
 from pybricks.tools import wait, StopWatch
 
 direito = Motor(Port.B)
-garra = Motor(Port.C)
+garra = Motor(Port.C, Direction.COUNTERCLOCKWISE)
 esquerdo = Motor(Port.D, Direction.COUNTERCLOCKWISE)
 corD = ColorSensor(Port.E)
 corE = ColorSensor(Port.F)
+fechar = Motor(Port.A)
 
 robo = DriveBase(direito, esquerdo, 87.2, 127.4)
 
 hub = PrimeHub()
 
 hub.imu.reset_heading(0)
-
-Motor(Port.A).run_time(300,100000)
 
 #Ínicio do código
 
@@ -71,19 +70,21 @@ def Estaciona():
 DirCurva(90)
 Andar(37.5)
 DirCurva(90)
-Andar(63.5)
-Andar(8.5)
+Andar(62)
 
 cores = [Color.GREEN, Color.RED, Color.YELLOW]
 
 while corD.color() not in cores and corE.color() not in cores:
     robo.drive(95,0)
 robo.stop()
+Andar(0.45)
+
 cor2 = SelecionaCor(corD.color())
 Andar(-5)
 DirCurva(90)
 while corD.color() not in cores and corE.color() not in cores:
     robo.drive(95,0)
+Andar(0.45)
 cor3 = SelecionaCor(corD.color())
 
 if cor3 != 'Y' and cor2 != 'Y':
@@ -95,8 +96,20 @@ else:
 sequencia = f'{cor1}{cor2}{cor3}'
 print(sequencia)
 DirCurva(90)
-Andar(45)
+Andar(35)
+
+if corD.reflection() < 6:
+    while corD.reflection() < 6:
+        esquerdo.run(100)
+    esquerdo.brake()
+if corE.reflection() < 6:
+    while corE.reflection() < 6:
+        direito.run(100)
+    direito.brake()
+
+Andar(20)
 Estaciona()
+Andar(4)
 DirCurva(90)
 Andar(11)
 
@@ -104,7 +117,8 @@ if sequencia == 'RGY':
     while corD.color() != Color.RED:
         robo.drive(110, 0)
     robo.stop()
-    garra.run_time(900000,16000)
+    fechar.run_time(-400, 4500)
+    garra.run_time(500,4500)
     Andar(-60)
     DirCurva(90)
 elif sequencia == 'RYG':
