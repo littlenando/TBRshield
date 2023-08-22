@@ -18,7 +18,6 @@ hub = PrimeHub()
 hub.imu.reset_heading(0)
 
 #Ínicio do código
-
 def SelecionaCor(cor):
     if cor == Color.RED:
         return('R')
@@ -68,24 +67,30 @@ def Estaciona():
 #Chegada até o ponto central da rampa (comum a todos)
 
 DirCurva(90)
-Andar(37.5)
+garra.run_time(350,1500)
+Andar(40)
 DirCurva(90)
-Andar(62)
+Andar(61.5)
 
 cores = [Color.GREEN, Color.RED, Color.YELLOW]
 
 while corD.color() not in cores and corE.color() not in cores:
     robo.drive(95,0)
 robo.stop()
-Andar(0.45)
-
-cor2 = SelecionaCor(corD.color())
+Andar(0.2)
+if corD.color() == Color.NONE:
+    cor2 = SelecionaCor(corE.color())
+else:
+    cor2 = SelecionaCor(corD.color())
+print(cor2)
 Andar(-5)
 DirCurva(90)
 while corD.color() not in cores and corE.color() not in cores:
     robo.drive(95,0)
-Andar(0.45)
+Andar(0.3)
+wait(200)
 cor3 = SelecionaCor(corD.color())
+print(cor3)
 
 if cor3 != 'Y' and cor2 != 'Y':
     cor1 = SelecionaCor(Color.YELLOW)
@@ -96,6 +101,7 @@ else:
 sequencia = f'{cor1}{cor2}{cor3}'
 print(sequencia)
 DirCurva(90)
+garra.run_time(350,1500)
 Andar(35)
 
 if corD.reflection() < 6:
@@ -114,17 +120,24 @@ DirCurva(90)
 Andar(11)
 
 if sequencia == 'RGY':
-    while corD.color() != Color.RED:
-        robo.drive(110, 0)
-    robo.stop()
-    fechar.run_time(-400, 4500)
-    garra.run_time(500,4500)
-    Andar(-60)
-    DirCurva(90)
+    pass
 elif sequencia == 'RYG':
     pass
 elif sequencia == 'YGR':
-    pass
+    garra.run_time(-350,1500)
+    while corD.color() != Color.RED:
+        robo.drive(110, 0)
+    robo.stop()
+    fechar.run_time(-100, 3000)
+    garra.run_time(350,1500)
+    Andar(-66)
+    DirCurva(90)
+    Andar(17)
+    garra.run_time(-350,1500)
+    fechar.run_time(100,2000)
+    garra.run_time(350,1500)
+    Andar(-17)
+
 elif sequencia == 'YRG':
     pass
 elif sequencia == 'GRY':
