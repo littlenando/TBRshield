@@ -140,7 +140,7 @@ elif sequencia == 'YGR':
         robo.drive(200, 0)
     robo.stop()
     DirCurva(90)
-    Andar(12)
+    Andar(13)
     fechar.run_time(-100,2900)
     garra.run_time(350,3800)
     Andar(21)
@@ -160,11 +160,12 @@ elif sequencia == 'YGR':
     EsqCurva(90)
     Andar(35)
     EsqCurva(90)
-    Andar(65)
-    
+    while corD.color() != Color.RED:
+        robo.drive(200,0)
+    robo.stop()
+    Estaciona()
+    Andar(50)
 
-
-    
 
 elif sequencia == 'YRG':
     pass
