@@ -17,6 +17,7 @@ hub = PrimeHub()
 
 hub.imu.reset_heading(0)
 
+
 #Ínicio do código
 def SelecionaCor(cor):
     if cor == Color.RED:
@@ -38,7 +39,6 @@ def DirCurva(ang):
 
 def EsqCurva(ang):
     if hub.imu.ready() == True:
-        print('oi')
         while hub.imu.heading() > -(ang):
             esquerdo.run(-100)
             direito.run(100)
@@ -82,15 +82,12 @@ if corD.color() == Color.NONE:
     cor2 = SelecionaCor(corE.color())
 else:
     cor2 = SelecionaCor(corD.color())
-print(cor2)
 Andar(-5)
 DirCurva(90)
 while corD.color() not in cores and corE.color() not in cores:
     robo.drive(95,0)
 Andar(0.3)
-wait(200)
 cor3 = SelecionaCor(corD.color())
-print(cor3)
 
 if cor3 != 'Y' and cor2 != 'Y':
     cor1 = SelecionaCor(Color.YELLOW)
@@ -99,9 +96,8 @@ elif cor3 != 'G' and cor2 != 'G':
 else:
     cor1 = SelecionaCor(Color.RED)
 sequencia = f'{cor1}{cor2}{cor3}'
-print(sequencia)
+print(f'A sequência executada é: {sequencia}')
 DirCurva(90)
-garra.run_time(350,1500)
 Andar(35)
 
 if corD.reflection() < 6:
@@ -126,17 +122,49 @@ elif sequencia == 'RYG':
 elif sequencia == 'YGR':
     garra.run_time(-350,1500)
     while corD.color() != Color.RED:
-        robo.drive(110, 0)
+        robo.drive(130, 0)
     robo.stop()
     fechar.run_time(-100, 3000)
-    garra.run_time(350,1500)
-    Andar(-66)
+    garra.run_time(400,2000)
+    Andar(-68)
     DirCurva(90)
-    Andar(17)
+    Andar(23)
+    Andar(-4.6)
     garra.run_time(-350,1500)
-    fechar.run_time(100,2000)
+    fechar.run_time(100,3000)
     garra.run_time(350,1500)
     Andar(-17)
+    EsqCurva(90)
+    garra.run_time(-350,1500)
+    while corD.color() != Color.RED:
+        robo.drive(200, 0)
+    robo.stop()
+    DirCurva(90)
+    Andar(12)
+    fechar.run_time(-100,2900)
+    garra.run_time(350,3800)
+    Andar(21)
+    Andar(-5.7)
+    garra.run_time(-350,2000)
+    fechar.run_time(100,2500)
+    garra.run_time(400,2500)
+    Andar(-10)
+    DirCurva(180)
+    garra.run_time(-350,2000)
+    while corD.color() != Color.GREEN:
+        robo.drive(130,0)
+    robo.stop()
+    fechar.run_time(-100, 3000)
+    garra.run_time(400,2000)
+    Andar(-18)
+    EsqCurva(90)
+    Andar(35)
+    EsqCurva(90)
+    Andar(65)
+    
+
+
+    
 
 elif sequencia == 'YRG':
     pass
