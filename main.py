@@ -73,14 +73,14 @@ DirCurva(90)
 garra.run_time(350,1500)
 Andar(40)
 DirCurva(90)
-Andar(61.5)
+Andar(62)
 
 cores = [Color.GREEN, Color.RED, Color.YELLOW]
 
 while corD.color() not in cores and corE.color() not in cores:
     robo.drive(95,0)
 robo.stop()
-Andar(3)
+Andar(2)
 if corD.color() == Color.NONE:
     cor2 = SelecionaCor(corE.color())
 else:
@@ -90,7 +90,10 @@ DirCurva(90)
 while corD.color() not in cores and corE.color() not in cores:
     robo.drive(95,0)
 Andar(2.8)
-cor3 = SelecionaCor(corD.color())
+if corD.color() == Color.NONE:
+    cor3 = SelecionaCor(corE.color())
+else:
+    cor3 = SelecionaCor(corD.color())
 
 if cor3 != 'Y' and cor2 != 'Y':
     cor1 = SelecionaCor(Color.YELLOW)
@@ -194,28 +197,29 @@ elif sequencia == 'RYG':
     garra.run_time(350,3800)
     Andar(-7)
     EsqCurva(90)
-    Andar(68)
+    Andar(70)
     EsqCurva(90)
-    Andar(28.5)
-    Andar(-6.3)
+    Andar(31)
+    Andar(-5.4)
     garra.run_time(-350,1500)
-    fechar.run_time(130,2800)
+    fechar.run_time(130,2300)
     garra.run_time(350,3800)
-    Andar(-12)
+    Andar(-28)
     robo.turn(90)
     garra.run_time(-350,1300)
     while corD.color() != Color.RED:
         robo.drive(180,0)
     robo.stop()
-    DirCurva(90)
+    robo.turn(-90)
     while corD.color() != Color.YELLOW:
         robo.drive(100,0)
     robo.stop()
+    Andar(-4)
     fechar.run_time(-130, 2800)
     Andar(-10)
     garra.run_time(350,3800)
-    Andar(-18)
-    robo.turn(90)
+    Andar(-10)
+    robo.turn(-90)
     Andar(28)
     robo.turn(90)
     while corD.color() != Color.RED:
@@ -279,7 +283,62 @@ elif sequencia == 'YGR':
 
 
 elif sequencia == 'YRG':
-    pass
+    while corD.color() != Color.RED:
+        robo.drive(130,0)
+    robo.stop()
+    Andar(-3)
+    DirCurva(90)
+    garra.run_time(-350,1500)
+    Andar(10.5)
+    fechar.run_time(-130,2300)
+    Andar(-5)
+    fechar.run_time(-130,1000)
+    garra.run_time(350,2000)
+    Andar(22)
+    Andar(-7)
+    garra.run_time(-350,1000)
+    fechar.run_time(130,2300)
+    garra.run_time(350,2000)
+    Andar(-8)
+    DirCurva(180)
+    garra.run_time(-350,1000)
+    while corD.color() != Color.GREEN:
+        robo.drive(130,0)
+    robo.stop()
+    fechar.run_time(-130,2800)
+    garra.run_time(350,3800)
+    Andar(-4)
+    EsqCurva(90)
+    Andar(70)
+    EsqCurva(90)
+    Andar(31)
+    Andar(-5.4)
+    garra.run_time(-350,1500)
+    fechar.run_time(130,2850)
+    garra.run_time(350,3800)
+    Andar(-20)
+    robo.turn(90)
+    garra.run_time(-350,1300)
+    while corD.color() != Color.RED:
+        robo.drive(180,0)
+    robo.stop()
+    fechar.run_time(-130,2300)
+    Andar(-6)
+    fechar.run_time(-100,1000)
+    garra.run_time(350,2300)
+    Andar(-24)
+    robo.turn(-90)
+    while corD.color() != Color.RED:
+        robo.drive(200,0)
+    robo.stop()
+    Andar(98.5)
+    garra.run_time(-300,1800)
+    fechar.run_time(130,3000)
+    garra.run_time(400,2000)
+
+
+
+
 elif sequencia == 'GRY':
     pass
 elif sequencia == 'GYR':
@@ -330,6 +389,3 @@ elif sequencia == 'GYR':
     garra.run_time(-300,1800)
     fechar.run_time(130,3000)
     garra.run_time(400,2000)
-
-
-    
