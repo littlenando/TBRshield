@@ -4,22 +4,18 @@ from pybricks.parameters import Button, Color, Direction, Port, Side, Stop
 from pybricks.robotics import DriveBase
 from pybricks.tools import wait, StopWatch
 
-direito = Motor(Port.B)
-garra = Motor(Port.C, Direction.COUNTERCLOCKWISE)
-esquerdo = Motor(Port.D, Direction.COUNTERCLOCKWISE)
-corD = ColorSensor(Port.E)
-corE = ColorSensor(Port.F)
-fechar = Motor(Port.A)
-
-robo = DriveBase(direito, esquerdo, 87.2, 127.4)
-
-hub = PrimeHub()
+direito   = Motor(Port.B)
+garra     = Motor(Port.C, Direction.COUNTERCLOCKWISE)
+esquerdo  = Motor(Port.D, Direction.COUNTERCLOCKWISE)
+corD      = ColorSensor(Port.E)
+corE      = ColorSensor(Port.F)
+fechar    = Motor(Port.A, Direction.COUNTERCLOCKWISE)
+robo      = DriveBase(direito, esquerdo, 87.2, 127.4)
+hub       = PrimeHub()
 
 hub.light.on(Color.RED)
 
 hub.imu.reset_heading(0)
-
-garra.run_time(350,2800)
 
 #Ínicio do código
 def SelecionaCor(cor):
@@ -70,8 +66,8 @@ def Estaciona():
 #Chegada até o ponto central da rampa (comum a todos)
 
 DirCurva(90)
-garra.run_time(350,1500)
-Andar(40)
+garra.run_time(350,1800)
+Andar(33)
 DirCurva(90)
 Andar(62)
 
@@ -89,7 +85,7 @@ Andar(-5)
 DirCurva(90)
 while corD.color() not in cores and corE.color() not in cores:
     robo.drive(95,0)
-Andar(2.8)
+Andar(3.2)
 if corD.color() == Color.NONE:
     cor3 = SelecionaCor(corE.color())
 else:
@@ -103,6 +99,7 @@ else:
     cor1 = SelecionaCor(Color.RED)
 sequencia = f'{cor1}{cor2}{cor3}'
 print(f'A sequência executada é: {sequencia}')
+Andar(-7)
 DirCurva(90)
 Andar(35)
 
