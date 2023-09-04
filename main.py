@@ -4,6 +4,8 @@ from pybricks.parameters import Button, Color, Direction, Port, Side, Stop
 from pybricks.robotics import DriveBase
 from pybricks.tools import wait, StopWatch
 
+tempo     = StopWatch()
+
 direito   = Motor(Port.B)
 garra     = Motor(Port.C, Direction.COUNTERCLOCKWISE)
 esquerdo  = Motor(Port.D, Direction.COUNTERCLOCKWISE)
@@ -85,11 +87,11 @@ Andar(-5)
 DirCurva(90)
 while corD.color() not in cores and corE.color() not in cores:
     robo.drive(95,0)
-Andar(3.2)
-if corD.color() == Color.NONE:
-    cor3 = SelecionaCor(corE.color())
-else:
+Andar(2)
+if corE.color() == Color.NONE:
     cor3 = SelecionaCor(corD.color())
+else:
+    cor3 = SelecionaCor(corE.color())
 
 if cor3 != 'Y' and cor2 != 'Y':
     cor1 = SelecionaCor(Color.YELLOW)
@@ -144,12 +146,12 @@ if sequencia == 'RGY':
     EsqCurva(90)
     Andar(24)
     Andar(-6.4)
-    garra.run_time(-350,1500)
+    garra.run_time(-350,2500)
     fechar.run_time(130,3000)
-    garra.run_time(350,1500)
+    garra.run_time(350,2500)
     Andar(-17)
     EsqCurva(90)
-    garra.run_time(-350,1300)
+    garra.run_time(-350,2500)
     Andar(68)
     EsqCurva(90)
     while corD.color() != Color.GREEN:
@@ -159,11 +161,12 @@ if sequencia == 'RGY':
     garra.run_time(400,2000)
     Andar(-18)
     robo.turn(90)
-    Andar(28)
+    Andar(36)
     robo.turn(90)
     while corD.color() != Color.RED:
         robo.drive(200,0)
     robo.stop()
+    DirCurva(-180)
     Andar(98.5)
     garra.run_time(-300,1800)
     fechar.run_time(130,3000)
@@ -386,3 +389,5 @@ elif sequencia == 'GYR':
     garra.run_time(-300,1800)
     fechar.run_time(130,3000)
     garra.run_time(400,2000)
+
+print('O programa foi executado em: ', tempo.time()/1000)
