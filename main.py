@@ -50,16 +50,16 @@ def Andar(cm):
     robo.straight(cm*10)
 
 def Estaciona():
-    while corD.reflection() > 6 and corE.reflection() > 6:
+    while corD.reflection() > 5 and corE.reflection() > 5:
         robo.drive(50,0)
     robo.stop()
-    if corD.reflection() < 6:
-        while corE.reflection() > 6:
+    if corD.reflection() < 5:
+        while corE.reflection() > 5:
             direito.run(90)
         wait(150)
         direito.brake()
-    elif corE.reflection() < 6:
-        while corD.reflection() > 6:
+    elif corE.reflection() < 5:
+        while corD.reflection() > 5:
             esquerdo.run(90)
         wait(150)
         esquerdo.brake()
@@ -104,12 +104,12 @@ Andar(-7)
 DirCurva(90)
 Andar(35)
 
-if corD.reflection() < 6:
-    while corD.reflection() < 6:
+if corD.reflection() < 5:
+    while corD.reflection() < 5:
         esquerdo.run(100)
     esquerdo.brake()
-if corE.reflection() < 6:
-    while corE.reflection() < 6:
+if corE.reflection() < 5:
+    while corE.reflection() < 5:
         direito.run(100)
     direito.brake()
 
@@ -243,13 +243,14 @@ elif sequencia == 'RYG':
     garra.run_time(350,3600)
     Andar(-10)
     robo.turn(-90)
-    Andar(28)
+    Andar(30)
     robo.turn(90)
     #Sobe a rampa vai pro outro lado (Comum etc)
     while corD.color() != Color.RED:
         robo.drive(220,0)
     robo.stop()
-    Andar(69)
+    Andar(81)
+    Andar(-4)
     DirCurva(90)
     wait(300)
     while corD.color() != Color.GREEN and corE.color() != Color.GREEN:
@@ -257,7 +258,7 @@ elif sequencia == 'RYG':
     robo.stop()
     Andar(12)
     robo.turn(90)
-    Andar(40)
+    Andar(32)
     robo.turn(45)
     Andar(7.5)
     while not(corD.color() == Color.BLUE and corE.color() == Color.BLUE):
@@ -286,7 +287,7 @@ elif sequencia == 'YGR':
     Andar(-68)
     DirCurva(90)
     Andar(24)
-    Andar(-4.6)
+    Andar(-6)
     garra.run_time(-350,1500)
     fechar.run_time(130,3000)
     garra.run_time(350,1500)
@@ -297,12 +298,15 @@ elif sequencia == 'YGR':
         robo.drive(200, 0)
     robo.stop()
     DirCurva(90)
-    Andar(13)
+    while corD.color() != Color.YELLOW:
+        robo.drive(200,0)
+    robo.stop()
+    Andar(-4)
     fechar.run_time(-130,2900)
     Andar(-5)
     garra.run_time(350,3800)
     Andar(24)
-    Andar(-5.7)
+    Andar(-6.5)
     garra.run_time(-350,2000)
     fechar.run_time(130,2500)
     garra.run_time(400,2500)
@@ -316,15 +320,37 @@ elif sequencia == 'YGR':
     garra.run_time(400,2000)
     Andar(-18)
     robo.turn(90)
-    Andar(28)
+    Andar(35)
     robo.turn(90)
+    hub.imu.reset_heading(0)
+    #Sobe a rampa vai pro outro lado (Comum etc)
     while corD.color() != Color.RED:
+        robo.drive(220,0)
+    robo.stop()
+    Andar(79)
+    DirCurva(90)
+    wait(300)
+    while corD.color() != Color.GREEN and corE.color() != Color.GREEN:
         robo.drive(200,0)
     robo.stop()
-    Andar(98.5)
-    garra.run_time(-300,1800)
-    fechar.run_time(130,3000)
-    garra.run_time(400,2000)
+    Andar(12)
+    robo.turn(90)
+    Andar(36)
+    robo.turn(45)
+    Andar(7.5)
+    while not(corD.color() == Color.BLUE and corE.color() == Color.BLUE):
+        robo.drive(200,0)
+    robo.stop()
+    Andar(13)
+    garra.run_time(350,1800)
+    robo.turn(135)
+    Andar(33)
+    Andar(-7)
+    garra.run_time(-350,1400)
+    fechar.run_time(140,1800)
+    garra.run_time(350,1800)
+    Andar(-9)
+    wait(1000)
 
 
 elif sequencia == 'YRG':
@@ -335,7 +361,7 @@ elif sequencia == 'YRG':
     DirCurva(90)
     garra.run_time(-350,1500)
     Andar(10.5)
-    fechar.run_time(-130,2300)
+    fechar.run_time(-135,2900)
     Andar(-5)
     fechar.run_time(-130,1000)
     garra.run_time(350,2000)
@@ -357,29 +383,51 @@ elif sequencia == 'YRG':
     Andar(70)
     EsqCurva(90)
     Andar(31)
-    Andar(-5.4)
+    Andar(-4.3)
     garra.run_time(-350,1500)
     fechar.run_time(130,2850)
     garra.run_time(350,3800)
     Andar(-20)
     robo.turn(90)
     garra.run_time(-350,1300)
+    fechar.run_time(130,1000)
     while corD.color() != Color.RED:
         robo.drive(180,0)
     robo.stop()
-    fechar.run_time(-130,2300)
+    fechar.run_time(-130,3200)
     Andar(-6)
     fechar.run_time(-100,1000)
     garra.run_time(350,2300)
-    Andar(-24)
+    Andar(-26)
     robo.turn(-90)
+    #Sobe a rampa vai pro outro lado (Comum etc)
     while corD.color() != Color.RED:
+        robo.drive(220,0)
+    robo.stop()
+    Andar(79)
+    DirCurva(90)
+    wait(300)
+    while corD.color() != Color.GREEN and corE.color() != Color.GREEN:
         robo.drive(200,0)
     robo.stop()
-    Andar(98.5)
-    garra.run_time(-300,1800)
-    fechar.run_time(130,3000)
-    garra.run_time(400,2000)
+    Andar(12)
+    robo.turn(90)
+    Andar(36)
+    robo.turn(45)
+    Andar(7.5)
+    while not(corD.color() == Color.BLUE and corE.color() == Color.BLUE):
+        robo.drive(200,0)
+    robo.stop()
+    Andar(13)
+    garra.run_time(350,1800)
+    robo.turn(135)
+    Andar(33)
+    Andar(-7)
+    garra.run_time(-350,1400)
+    fechar.run_time(140,1800)
+    garra.run_time(350,1800)
+    Andar(-9)
+    wait(1000)
 
 
 
