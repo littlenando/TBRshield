@@ -15,6 +15,8 @@ fechar    = Motor(Port.A, Direction.COUNTERCLOCKWISE)
 robo      = DriveBase(direito, esquerdo, 87.2, 127.4)
 hub       = PrimeHub()
 
+robo.settings(304,1141,100,800)
+
 hub.light.on(Color.RED)
 
 hub.imu.reset_heading(0)
@@ -68,7 +70,7 @@ def Estaciona():
 
 DirCurva(90)
 garra.run_time(350,1800)
-Andar(38)
+Andar(37)
 DirCurva(90)
 Andar(61)
 
@@ -161,8 +163,8 @@ if sequencia == 'RGY':
     garra.run_time(400,2500)
     Andar(-18)
     robo.turn(90)
-    Andar(38)
-    robo.turn(89)
+    Andar(36)
+    robo.turn(90)
     hub.imu.reset_heading(0)
 
     #Sobe a rampa vai pro outro lado (Comum etc)
@@ -170,20 +172,20 @@ if sequencia == 'RGY':
         robo.drive(200,0)
     robo.stop()
     Andar(74)
-    DirCurva(90)
+    robo.turn(-90)
     wait(300)
     while corD.color() != Color.GREEN and corE.color() != Color.GREEN:
         robo.drive(200,0)
     robo.stop()
     Andar(12)
     robo.turn(90)
-    Andar(43)
+    Andar(44.5)
     robo.turn(55)
     Andar(12)
     while not(corD.color() == Color.BLUE and corE.color() == Color.BLUE):
         robo.drive(200,0)
     robo.stop()
-    Andar(9)
+    Andar(13)
     garra.run_time(350,2000)
     robo.turn(125)
     Andar(33)
