@@ -15,7 +15,7 @@ fechar    = Motor(Port.A, Direction.COUNTERCLOCKWISE)
 robo      = DriveBase(direito, esquerdo, 87.2, 127.4)
 hub       = PrimeHub()
 
-robo.settings(304,1141,100,800)
+robo.settings(330,1141,100,800)
 
 hub.light.on(Color.RED)
 
@@ -31,7 +31,6 @@ def SelecionaCor(cor):
 
 def DirCurva(ang):
     if hub.imu.ready() == True:
-        
         while hub.imu.heading() < (ang):
             esquerdo.run(100)
             direito.run(-100)
@@ -70,9 +69,15 @@ def Estaciona():
 
 DirCurva(90)
 garra.run_time(350,1800)
-Andar(37)
+Andar(38)
 DirCurva(90)
+robo.stop()
+robo.settings(450,1141,100,800)
+
 Andar(61)
+robo.stop()
+robo.settings(320,1141,100,800)
+
 
 cores = [Color.GREEN, Color.RED, Color.YELLOW]
 
@@ -449,8 +454,9 @@ elif sequencia == 'GRY':
     DirCurva(90)
     Andar(68)
     EsqCurva(90)
-    Andar(25)
-    Andar(-7)
+    esquerdo.run_time(220, 2000, wait=False)
+    direito.run_time(220, 2000, wait=True)
+    Andar(-6)
     garra.run_time(-350,2000)
     fechar.run_time(150,2000)
     garra.run_time(350,2000)
@@ -462,12 +468,13 @@ elif sequencia == 'GRY':
     Andar(-1.5)
     EsqCurva(90)
     garra.run_time(-350,1800)
-    Andar(13)
+    Andar(12)
     fechar.run_time(-150,1900)
     garra.run_time(350,2000)
     EsqCurva(180)
-    Andar(48)
-    Andar(-7)
+    esquerdo.run_time(220, 3500, wait=False)
+    direito.run_time(220, 3500, wait=True)
+    Andar(-6)
     garra.run_time(-350,1800)
     fechar.run_time(150,1900)
     garra.run_time(350,2000)
@@ -477,8 +484,8 @@ elif sequencia == 'GRY':
     garra.run_time(-350,1700)
     Andar(9)
     fechar.run_time(-150,3000)
-    Andar(-34)
     garra.run_time(300,2000)
+    Andar(-34)
     robo.turn(-90)
     wait(500)
     hub.imu.reset_heading(0)
@@ -486,7 +493,11 @@ elif sequencia == 'GRY':
     while corD.color() != Color.RED:
         robo.drive(220,0)
     robo.stop()
-    Andar(73.5)
+    robo.settings(450,1141,100,800)
+    Andar(74)
+    robo.settings(300,1141,80,800)
+    Andar(-4)
+    Andar(5)
     robo.turn(-90)
     wait(300)
     while corD.color() != Color.GREEN and corE.color() != Color.GREEN:
@@ -494,13 +505,13 @@ elif sequencia == 'GRY':
     robo.stop()
     Andar(12)
     robo.turn(90)
-    Andar(41)
+    Andar(43)
     robo.turn(60)
     Andar(9)
     while not(corD.color() == Color.BLUE and corE.color() == Color.BLUE):
         robo.drive(200,0)
     robo.stop()
-    Andar(13.5)
+    Andar(15)
     garra.run_time(350,1800)
     robo.turn(120)
     Andar(33)
