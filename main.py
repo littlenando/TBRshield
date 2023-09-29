@@ -4,8 +4,9 @@ from pybricks.parameters import Button, Color, Direction, Port, Side, Stop
 from pybricks.robotics import DriveBase
 from pybricks.tools import wait, StopWatch
 
-tempo     = StopWatch()
+#Declaração dos objetos do código
 
+tempo     = StopWatch()
 direito   = Motor(Port.B)
 garra     = Motor(Port.C, Direction.COUNTERCLOCKWISE)
 esquerdo  = Motor(Port.D, Direction.COUNTERCLOCKWISE)
@@ -16,13 +17,20 @@ robo      = DriveBase(direito, esquerdo, 87.2, 127.4)
 hub       = PrimeHub()
 
 print('Bateria (em mV): ', hub.battery.voltage())
-robo.settings(330,1141,100,800)
-
+robo.settings(330,1141,100,800) # Define respectivamente: velocidade, aceleração, velocidade de curva e aceleração de curva
 hub.light.on(Color.RED)
-
 hub.imu.reset_heading(0)
+
 #Ínicio do código
 def SelecionaCor(cor):
+    """
+    Retorna uma string com a inicial da cor. Ex.: Para o objeto Color.RED retorna a string 'R'.
+
+    Args:
+        cor (Color): cor a ser convertida
+    Retorna:
+        (string): cor convertida em string
+    """
     if cor == Color.RED:
         return('R')
     if cor == Color.GREEN:
@@ -31,6 +39,12 @@ def SelecionaCor(cor):
         return('Y')
 
 def DirCurva(ang):
+    """
+    Fez com que a DriveBase realize uma curva em seu próprio eixo para direita, com a angulação definida.
+
+    Args:
+        ang (float): ângulo da curva a ser realizado, em graus.
+    """
     if hub.imu.ready() == True:
         while hub.imu.heading() < (ang):
             esquerdo.run(100)
@@ -40,6 +54,12 @@ def DirCurva(ang):
         hub.imu.reset_heading(0)
 
 def EsqCurva(ang):
+    """
+    Fez com que a DriveBase realize uma curva em seu próprio eixo para esquerda, com a angulação definida.
+
+    Args:
+        ang (float): ângulo da curva a ser realizado, em graus.
+    """
     if hub.imu.ready() == True:
         while hub.imu.heading() > -(ang):
             esquerdo.run(-100)
@@ -49,9 +69,18 @@ def EsqCurva(ang):
         hub.imu.reset_heading(0)
 
 def Andar(cm):
+    """
+    Fez com que a DriveBase ande em linha reta por uma distância determinada.
+
+    Args:
+        cm (float): distância em centímetros a ser percorrida pelo robô.
+    """
     robo.straight(cm*10)
 
 def Estaciona():
+    """
+    Alinha o robô com uma linha reta da cor preta.
+    """
     while corD.reflection() > 5 and corE.reflection() > 5:
         robo.drive(50,0)
     robo.stop()
@@ -73,19 +102,20 @@ garra.run_time(350,1800)
 Andar(38)
 DirCurva(90)
 robo.stop()
-robo.settings(450,1141,100,800)
+robo.settings(450,1141,100,800) # Aumenta a velocidade do robô para subir na rampa com mais precisão.
 
 Andar(61)
 robo.stop()
 robo.settings(320,1141,100,800)
 
 
-cores = [Color.GREEN, Color.RED, Color.YELLOW]
+cores = [Color.GREEN, Color.RED, Color.YELLOW] #Lista com cores possíveis para as plaquetas
 
 while corD.color() not in cores and corE.color() not in cores:
     robo.drive(95,0)
 robo.stop()
 Andar(2)
+#Seleciona a cor da frente, dando prioridade para o sensor direito.
 if corD.color() == Color.NONE:
     cor2 = SelecionaCor(corE.color())
 else:
@@ -100,13 +130,14 @@ if corE.color() == Color.NONE:
 else:
     cor3 = SelecionaCor(corE.color())
 
+#Deduz a terceira cor com base nas outras cores.
 if cor3 != 'Y' and cor2 != 'Y':
     cor1 = SelecionaCor(Color.YELLOW)
 elif cor3 != 'G' and cor2 != 'G':
     cor1 = SelecionaCor(Color.GREEN)
 else:
     cor1 = SelecionaCor(Color.RED)
-sequencia = f'{cor1}{cor2}{cor3}'
+sequencia = f'{cor1}{cor2}{cor3}' # Descobre a sequência executada
 print(f'A sequência executada é: {sequencia}')
 Andar(-7)
 DirCurva(90)
@@ -127,21 +158,23 @@ Andar(4)
 DirCurva(90)
 Andar(11)
 
-if sequencia == 'RGY':
+# Início da rotina de programação escolhida
+
+if sequencia == 'RGY': # Vermelho, verde e amarelo.
     garra.run_time(-350,1300)
     while corD.color() != Color.RED:
         robo.drive(130, 0)
     robo.stop()
-    fechar.run_time(-140, 3000)
+    fechar.run_time(-140, 3000) #Pega as árvores vermelhas
     garra.run_time(400,2500)
     DirCurva(90)
     while corD.color() != Color.YELLOW:
-        robo.drive(120,0)
-    robo.stop()
+        robo.drive(120,0) 
+    robo.stop() #Vai até a Área de Reflorestamento Norte
     Andar(6)
     garra.run_time(-350,1300)
     fechar.run_time(130,2800)
-    garra.run_time(350,2500)
+    garra.run_time(350,2500) #Entrega as árvores vermelhas
     Andar(-8.5)
     garra.run_time(-350,1300)
     fechar.run_time(-140,3200)
