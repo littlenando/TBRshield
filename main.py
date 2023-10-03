@@ -464,33 +464,35 @@ while not(direito.stalled()):
     robo.drive(-640,0)
 robo.stop()
 robo.settings(300,1141,80,800)
-Andar(4)
+Andar(9)
+wait(300)
 robo.turn(90)
 wait(300)
 garra.run_time(300,1500)
 while corD.color() != Color.GREEN and corE.color() != Color.GREEN:
     robo.drive(200,0)
 robo.stop()
-Andar(14.2)
-robo.turn(90)
-Andar(40.5)
-robo.turn(60)
-Andar(9)
-while not(corD.color() == Color.BLUE and corE.color() == Color.BLUE):
-    robo.drive(200,0)
-robo.stop()
-Andar(13.5)
-garra.run_time(350,1800)
-robo.turn(120)
-while not(direito.stalled()):
-    robo.drive(300,0)
-robo.stop()
-wait(200)
-Andar(-6)
-garra.run_time(-350,1400)
-fechar.run_time(140,1800)
-garra.run_time(350,1800)
-Andar(-10)
-wait(1000)
+Andar(20.6)
+
+#Se igual, derrubar a vermelha
+alarmeCor = SelecionaCor(corE.color())
+
+
+if cor3 == alarmeCor:
+    print('IGUAIS')
+    Andar(-6)
+    robo.turn(90)
+    Andar(24)
+    robo.turn(90)
+    Andar(20)
+    Andar(-6.5)
+    garra.run_time(-200,1700)
+    fechar.run_time(100,1800)
+    garra.run_time(300,1800)
+    Andar(-8)
+    robo.turn(90)
+
+else: 
+    print('DIFERENTES')
 
 print('O programa foi executado em: ', tempo.time()/1000, 's')
